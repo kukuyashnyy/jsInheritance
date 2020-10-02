@@ -10,11 +10,30 @@
         this.name = name;
     }
 
+    Shape.prototype.toString = function () {
+        return "Name: " + this.name +
+            "; " + "a = " + this.a +
+            "; " + "b = " + this.b +
+            "; " + "area = " + this.area();
+    }
+
+    Shape.prototype.info = function () {
+        let div = document.createElement('div');
+        div.innerHTML = this.toString();
+        document.body.append(div);
+    }
+
     function Rectangle(name, a, b) {
-        // Shape.call(this, name);
+        Shape.call(this, name);
         this.a = a;
         this.b = b;
-        Rectangle.prototype = Object.create(Shape.prototype);
+    }
+
+    Rectangle.prototype = Object.create(Shape.prototype);
+    Rectangle.prototype.constructor = Rectangle;
+
+    Rectangle.prototype.area = function () {
+        return this.a * this.b;
     }
 
     function Ellipse(name, a, b) {
@@ -23,17 +42,33 @@
         this.b = b;
     }
 
+    Ellipse.prototype = Object.create(Shape.prototype);
+    Ellipse.prototype.constructor = Ellipse;
+
     function Square(name, a) {
-        Rectangle.call(this, name);
-        Rectangle.call(this, a);
+        Rectangle.call(this, name, a, a);
     }
 
-    Rectangle.prototype.toString = function () {
-        return "Name: " + this.name + "; " + "a = " + this.a + "; " + "b = " + this.b;
+    Square.prototype = Object.create(Rectangle.prototype);
+    Square.prototype.constructor = Square;
+
+    Ellipse.prototype.area = function () {
+        return Math.PI * this.a * this.b;
     }
 
-    const myObj = new Rectangle("Kvadrat", 2, 2);
-    console.log(myObj.toString());
+    function Circle(name, a) {
+        Ellipse.call(this, name, a, a);
+    }
+
+    Circle.prototype = Object.create(Ellipse.prototype);
+    Circle.prototype.constructor = Circle;
+
+    const myObj1 = new Square("Kvadrat", 2);
+    console.log(myObj1.toString());
+    myObj1.info();
+    const myObj2 = new Circle("Krug", 3);
+    console.log(myObj2.toString());
+    myObj2.info();
 
 </script>
 </body>
