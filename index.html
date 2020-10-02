@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function Shape(name) {
+        this.name = name;
+    }
+
+    function Rectangle(name, a, b) {
+        // Shape.call(this, name);
+        this.a = a;
+        this.b = b;
+        Rectangle.prototype = Object.create(Shape.prototype);
+    }
+
+    function Ellipse(name, a, b) {
+        Shape.call(this, name);
+        this.a = a;
+        this.b = b;
+    }
+
+    function Square(name, a) {
+        Rectangle.call(this, name);
+        Rectangle.call(this, a);
+    }
+
+    Rectangle.prototype.toString = function () {
+        return "Name: " + this.name + "; " + "a = " + this.a + "; " + "b = " + this.b;
+    }
+
+    const myObj = new Rectangle("Kvadrat", 2, 2);
+    console.log(myObj.toString());
+
+</script>
+</body>
+</html>
